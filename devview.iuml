@@ -1,0 +1,51 @@
+@startuml
+
+!include defines.iuml
+
+class QObject
+
+package deviceview {
+
+	QObject -PUBLIC-|> DevView 
+	
+	DeviceParams -o DevView
+	
+	class DevView{
+	'members
+		+visible : bool
+		+visibleAxis : bool
+		+color : QColor
+		+rot1 : QVector4D
+		+rot2 : QVector4D
+		+rot3 : QVector4D
+		+rot1add : QVector4D
+		+rot2add : QVector4D
+		+rot3add : QVector4D
+		+length : double
+		+visLine : QVector3D
+		+upLine : QVector3D
+		+sideLine : QVector3D
+		+cone : bool
+		+baseRad : double
+		+coneheight : double
+		+vlb : QVector3D
+		+vrb : QVector3D
+		+vlt : QVector3D
+		+vrt : QVector3D
+		-_dev : DeviceParams*
+	'methods
+		--
+		+setDevice(DeviceParams * device) : void
+		+device() : DeviceParams
+		-getRot(double angle, int axis) : QVector4D
+		-axisToXYZ(int tyAxis) : QVector4D
+		--slots--
+		+resetDevice() : void
+		--signals--
+		+updateGl()
+		..Constructors/Destructors..
+		+DevView(DeviceParams* dev = 0, QObject * parent =0)
+		+~DevView()
+	}
+}
+@enduml

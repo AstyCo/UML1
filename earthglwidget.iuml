@@ -1,0 +1,53 @@
+
+@startuml
+!include defines.iuml
+
+!include earthGL.iuml
+
+class Interval
+class QWidget
+
+package earthglwidget {
+
+	QWidget -PUBLIC-|> earthGlWidget 
+	Ui::earthGlWidget -* earthGlWidget
+	
+	Interval "0..*" -QMAP_LINK-* earthGlWidget : QMAP_TEXT int
+	
+	class earthGlWidget EXPORT {
+	'members
+		-ui : Ui::earthGlWidget*
+		-sliderInterval : Interval
+		-shipIntervals : QMap<int, Interval>
+		-currentDT : UtcDateTime
+	'methods
+		--
+		+addSpaceObject(QPointer<SpaceObject> ship) : void
+		+removeSpaceObject(int id) : void
+		+getShipNames(QMap<int, QString> &shipNames, bool onlyKa) : void
+		+getSpaceObject(int id) : QPointer<SpaceObject>
+		+setEarthMode(bool texture, bool quads, bool cull, QString texPath, int nPoints) : void
+		--slots--
+		-on_earthOptions_clicked() : void
+		-on_horizontalSlider_valueChanged(int value) : void
+		-shipIntervalChanged(int id) : void
+		-on_pushButton_clicked() : void
+		--signals--
+		+currentTimeChanged(UtcDateTime& current)
+		..Constructors/Destructors..
+		+explicit earthGlWidget(QWidget *parent = 0);
+		+~earthGlWidget();
+	}
+	
+	earthGL <.USAGE Ui::earthGlWidget
+	
+	class Ui::earthGlWidget {
+	'members
+		+earthOptions : QPushButton
+		+horizontalSlider : QSlider
+		+pushButton : QPushButton
+		+widget : earthGL
+	}
+	
+}
+@enduml

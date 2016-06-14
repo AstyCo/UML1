@@ -1,0 +1,22 @@
+
+@startuml
+!include defines.iuml
+
+!include kopointdata.iuml
+
+package spaceobject {
+
+	KoPointData "0..*" -QMAP_LINK-* TrekPoint : QMAP_TEXT int
+
+	class TrekPoint{
+	'members
+		+koMap : QMap<int, KoPointData>
+		+pos : QVector3D
+		+vel : QVector3D
+		+dt : UtcDateTime
+	}
+
+}
+@enduml
+
+

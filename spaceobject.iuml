@@ -1,0 +1,107 @@
+
+@startuml
+!include defines.iuml
+
+!include koinfo.iuml
+!include treksegment.iuml
+!include kopointdata.iuml
+!include trekpoint.iuml
+
+class QObject
+
+package spaceobject {
+
+	QObject -PUBLIC-|> SpaceObject 
+	koInfo "0..*" -QMAP_LINK-* SpaceObject : QMAP_TEXT int
+	TrekSegment "0..*" -QMAP_LINK-* SpaceObject : QMAP_TEXT UtcDateTime
+	'TrekPoint <.USAGE SpaceObject
+	
+	koInfo -[hidden]down TrekPoint
+	
+	class SpaceObject EXPORT {
+	'members
+		-hasKoData : bool
+		-visible : bool
+		-trajectory : QMap<UtcDateTime, TrekSegment>
+		-koMap : QMap<int, koInfo>
+		-devices : QPointer<DeviceViewModel>
+		-currentDate : UtcDateTime
+		-currentPoint : TrekPoint
+		-currentVis : bool
+		-trajVertices : QVector<GLfloat>
+		-trajColors : QVector<GLfloat>
+		-trajIndices : QVector<GLuint>
+		-drawPrev : int
+		-drawNext : int
+		-trajColor : QColor
+		-drawOsk : bool
+		-drawDevs : bool
+		-drawKos : bool
+		-sign : bool
+		-oskSign : bool
+		-xOsk : QVector3D
+		-yOsk : QVector3D
+		-zOsk : QVector3D
+		-axisColor : QColor
+		-maxD : double
+	'methods
+		--
+		+setModel(QPointer<DeviceViewModel> model) : bool
+		+addStateVector(const QList<StateVector>& vector) : void
+		+addTrek(int koId, QString koName, ListVrTrekPoint& trek, ListVrParamsPoint& params) : void
+		+addFromTrek(ListVrTrekPoint& trek) : void
+		+getKoNames(QMap<int, QString>& kos) : void
+		+removeKo(int id) : void
+		+getId() : int
+		+isKa() : bool
+		+getName() : QString
+		+hasOskData() : bool
+		+getInterval(Interval&) : bool
+		+setVisible(bool vis) : void
+		+getVisible() : bool
+		+getCurrentVisible() : bool
+		+setColor(QColor color) : void
+		+getColor() : QColor
+		+drawTrajectory() : void
+		+drawShip(QGLWidget* glWidget, bool earthMode) : void
+		+setDrawOsk(bool d) : void
+		+isDrawOsk() : bool
+		+setDrawDevs(bool d) : void
+		+isDrawDevs() : bool
+		+setDrawKos(bool d) : void
+		+isDrawKos() : bool
+		+setVisibleKo(int id, bool vis) : void
+		+getVisibleKo(int id) : bool
+		+setVisibleKoSign(int id, bool vis) : void
+		+getVisibleKoSign(int id) : bool
+		+setKoColor(int id, QColor color) : void
+		+getKoColor (int id) : QColor
+		+setVisibleSign(bool d) : void
+		+getVisibleSign() : bool
+		+setVisibleOskSign(bool d) : void
+		+getVisibleOskSign() : bool
+		#updateCurrentTrajectory() : void
+		#drawOskDevs(QGLWidget* glWidget, bool earthMode) : void
+		#drawDevices(QGLWidget* glWidget) : void
+		#setCurrentTimeOsk() : void
+		#addTrekOsk(int koId, QString koName, ListVrTrekPoint& points, ListVrParamsPoint& params) : void
+		#drawKoDest(QGLWidget* glWidget, bool earthMode) : void		
+		--slots--
+		+onDateTimeChanged(UtcDateTime& dt) : void
+		+onDeviceChanged() : void
+		--signals--
+		+intervalChanged(int id)
+		+spaceObjectChanged()
+		..Constructors/Destructors..
+		+SpaceObject(KA* ka, QObject *parent=0);
+		+~SpaceObject();
+	}
+	
+	note bottom of SpaceObject #Salmon
+		методы класса используют глобальную функцию
+		<color:DarkViolet>void OSKFromRandV(QVector3D r, QVector3D v, QVector3D& x, QVector3D& y, QVector3D& z) </color>
+	end note
+}
+
+
+@enduml

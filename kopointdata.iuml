@@ -1,0 +1,16 @@
+
+@startuml
+!include defines.iuml
+
+package spaceobject {
+
+	class KoPointData{
+	'members
+		+pos : QVector3D
+		+vel : QVector3D
+		+params : VrParamsPointPtr
+	}
+
+}
+@enduml
+

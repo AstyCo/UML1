@@ -1,0 +1,17 @@
+
+@startuml
+!include defines.iuml
+
+!include trekpoint.iuml
+
+package spaceobject {
+
+	TrekPoint "0..*" -QMAP_LINK-* TrekSegment : QMAP_TEXT UtcDateTime
+
+	class TrekSegment{
+	'members
+		+segment : QMap<UtcDateTime, TrekPoint>
+		+interval : Interval
+	}
+}
+@enduml

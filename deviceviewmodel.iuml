@@ -1,0 +1,44 @@
+@startuml
+!include defines.iuml
+
+!include devview.iuml
+
+class QAbstractTableModel
+
+package deviceviewmodel {
+
+	QAbstractTableModel -PUBLIC-|> DeviceViewModel 
+
+	DevView "0..*" -o DeviceViewModel
+	
+	class DeviceViewModel EXPORT {
+	'members
+		-_items : QList<QSharedPointer<DevView>>
+	'methods
+		--
+		+data(const QModelIndex &index, int role) : QVariant : const
+		
+		+flags(const QModelIndex &index) : Qt::ItemFlags : const
+		+rowCount(const QModelIndex &parent) : int : const
+		+columnCount(const QModelIndex &parent) : int : const
+		+headerData(int section, Qt::Orientation orientation, int role) : QVariant : const
+		+setData(const QModelIndex &index, const QVariant &value, int role) : bool
+		+setColor(const QModelIndex& index, QColor color) : void
+		+getColor(const QModelIndex& index) : QColor
+		+append(DeviceParams * dev) : void
+		+remove(const QModelIndex &index) : void
+		+items() : QList<QSharedPointer<DevView>> : const
+		+setItems(const QList<QSharedPointer<DevView>> &items) : void
+		
+		--slots--
+		
+		--signals--
+		
+		..Constructors/Destructors..
+		+explicit DeviceViewModel(QObject *parent = 0);
+		+DeviceViewModel(QList<DeviceParams*>& list, QObject *parent=0);
+		+~DeviceViewModel();
+	}
+
+}
+@enduml

@@ -1,0 +1,39 @@
+@startuml
+
+!include defines.iuml
+
+class QDialog
+
+package choosekadialog{
+
+	QDialog -PUBLIC-|> ChooseKaDialog 
+	
+	class ChooseKaDialog {
+	'members
+		-ui : Ui::ChooseKaDialog*
+		-strKas : QMap<int, int>
+	'methods
+		--
+		+getKa() : int
+		+addKas(QMap<int, QString>& kas) : void
+		--slots--
+		
+		--signals--
+		
+		..Constructors/Destructors..
+		+explicit ChooseKaDialog(QWidget *parent = 0)
+		+~ChooseKaDialog();
+	} 
+	'extra-depends
+	Ui::ChooseKaDialog -* ChooseKaDialog
+	
+	class Ui::ChooseKaDialog {
+	'members
+		+buttonBox : QDialogButtonBox
+		+listWidget : QListWidget
+	}
+	
+	
+}
+
+@enduml

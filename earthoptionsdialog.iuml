@@ -1,0 +1,55 @@
+
+@startuml
+!include defines.iuml
+
+class QDialog
+
+package earthoptionsdialog {
+
+	QDialog -PUBLIC-|> EarthOptionsDialog 
+	Ui::EarthOptionsDialog -* EarthOptionsDialog
+	class EarthOptionsDialog{
+	'members
+		-ui : Ui::EarthOptionsDialog*
+	'methods
+		--
+		+getEarthOptions(bool& use, bool& quads, bool& cull, QString& path, int& n) : void
+		
+		--slots--
+		-on_noTexture_clicked() : void
+		-on_useTexture_clicked() : void
+		-on_pushButton_clicked() : void
+		-on_pushButton_2_clicked() : void
+		-on_pushButton_3_clicked() : void
+		--signals--
+		
+		..Constructors/Destructors..
+		+explicit EarthOptionsDialog(QWidget *parent = 0);
+		+~EarthOptionsDialog();
+	}
+	
+	class Ui::EarthOptionsDialog {
+	'members
+		+groupBox : QGroupBox
+		+groupBox_2 : QGroupBox
+		+quads : QRadioButton
+		+triangles : QRadioButton
+		+groupBox_3 : QGroupBox
+		+cull : QRadioButton
+		+noCull : QRadioButton
+		+label_2 : QLabel
+		+lineEdit: QLineEdit
+		+pushButton : QPushButton
+		+label : QLabel
+		+noTexture : QRadioButton
+		+pushButton_2 : QPushButton
+		+pushButton_3 : QPushButton
+		+spinBox : QSpinBox
+		+useTexture : QRadioButton
+	}
+	
+	
+
+}
+@enduml
+

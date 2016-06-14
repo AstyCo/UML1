@@ -1,0 +1,23 @@
+
+@startuml
+!include defines.iuml
+
+class Interval
+
+package spaceobject {
+
+	Interval "0..*" -QMAP_LINK* koInfo : QMAP_TEXT UtcDateTime
+
+	class koInfo{
+	'members
+		+id : int
+		+name : QString
+		+color : QColor
+		+visible : bool
+		+signVis : bool
+		+interval : QMap<UtcDateTime, Interval>	
+	}
+
+}
+@enduml
+

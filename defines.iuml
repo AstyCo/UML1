@@ -1,0 +1,21 @@
+@startuml
+
+!define PUBLIC [#Blue]
+!define PROTECTED [#Green]
+!define PRIVATE [#Red]
+!define TEMPLATE_SPEC [#Yellow]
+!define USAGE [#Gray]
+
+!define QMAP_COLOR ForestGreen
+!define QMAP_LINK [#QMAP_COLOR]
+!define QMAP_TEXT <color:QMAP_COLOR>
+
+!define EXPORT <<(C,#FF7700) export>> 
+
+!define FUNCTION << (F,#32CD32) Global Function >>
+!define QLIST_STEREOTYPE << (QList,#00FF7F) >>
+!define QMAP_STEREOTYPE << (QMap,#00FF7F) >>
+
+set namespaceSeparator ::
+
+@enduml

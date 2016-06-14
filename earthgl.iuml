@@ -1,0 +1,83 @@
+@startuml
+!include defines.iuml
+
+!include spaceobject.iuml
+
+class QGLWidget
+
+package earthgl {
+
+	enum DisplayMode {
+		+displayOSK
+		+displayGSK
+	}
+
+	note right of DisplayMode 
+		displayOSK - отображаем один КА
+		displayGSK - отображаем Землю и все КА
+	end note
+
+	QGLWidget -PUBLIC-|> earthGL
+	DisplayMode <.USAGE. earthGL
+	SpaceObject "0..*" -QMAP_LINK-o earthGL : QMAP_TEXT<size:20>int</size>
+
+	class earthGL{
+	'members
+		-spaceObjects : QMap<int, QPointer<SpaceObject>>
+		-mode : DisplayMode
+		-kaId : int
+		-useTexture : bool
+		-useQuads : bool
+		-useCulling : bool
+		-earthTexturePath : QString
+		-earthNPoints : int
+		-gskAxisText : bool
+		-earthTexId : GLuint
+		-vecVertices : QVector<GLfloat>
+		-vecTextures : QVector<GLfloat>
+		-vecColors : QVector<GLfloat>
+		-vecIndices : QVector<GLuint>
+		-camPos : QVector3D
+		-camRad : double
+		-camLat : double
+		-camLon : double
+		-prevX : int
+		-prevY : int
+		-mousePressed : bool
+	'methods
+		--
+		+setEarthMode(bool texture, bool quads, bool cull, QString texPath, int nPoints) : void
+		+setGskLabelsVisible(bool vis) : void
+		+getGskLabelsVisible() : bool
+		+addSpaceObject(QPointer<SpaceObject> ship) : bool
+		+removeSpaceObject(int id) : bool
+		+getShipNames(QMap<int, QString> &shipNames, bool onlyKa) : void
+		+getSpaceObject(int id) : QPointer<SpaceObject>
+		+setMode(DisplayMode dm, int ka) : void
+		+getMode() : DisplayMode
+		{abstract}#initializeGL() : void
+		{abstract}#resizeGL(int w, int h) : void
+		{abstract}#paintGL() : void
+		{abstract}#mousePressEvent(QMouseEvent *) : void
+		{abstract}#mouseReleaseEvent(QMouseEvent *) : void
+		{abstract}#mouseMoveEvent(QMouseEvent *) : void
+		{abstract}#wheelEvent(QWheelEvent *) : void
+		#paintGSK() : void
+		#paintEarth() : void
+		#paintGSKAxis() : void
+		#paintTrajs() : void
+		#paintShips() : void
+		#paintOSK() : void
+		#genTexture() : void
+		#getVerTexArrays() : void
+		#getIndexArrays() : void
+		--slots--
+		
+		--signals--
+		
+		..Constructors/Destructors..
+		+explicit earthGL(QWidget *parent = 0);
+	}
+
+}
+@enduml

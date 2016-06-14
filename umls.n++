@@ -1,0 +1,27 @@
+
+@startuml
+!include defines.iuml
+
+package name {
+
+	AbstClass -PUBLIC-|> classname 
+
+	class classname{
+	'members
+		
+	'methods
+		--
+		+ : void
+		
+		--slots--
+		
+		--signals--
+		
+		..Constructors/Destructors..
+		
+	}
+
+}
+@enduml
+
+
